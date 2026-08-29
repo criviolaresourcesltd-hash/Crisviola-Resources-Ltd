@@ -2,4 +2,5 @@ Flask>=3.1,<4
 Flask-SQLAlchemy>=3.1,<4
 python-dotenv>=1.0,<2
 gunicorn
-cloudinarypsycopg2-binary
+cloudinary
+psycopg2-binary

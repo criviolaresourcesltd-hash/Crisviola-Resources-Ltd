@@ -1,1 +1,65 @@
-{% extends 'base.html' %}{% block title %}{{product.name}} | CRISVIOLA RESOURCES LTD{% endblock %}{% block content %}<section class="section detail"><a class="back" href="{{url_for('public.products')}}">← Back to products</a><div class="detail-grid"><div class="detail-pic">{% if product.image %}<img src="{{url_for('static',filename=product.image)}}" alt="{{product.name}}" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="placeholder" style="display:none">{{product.name[0]}}</div>{% else %}<div class="placeholder">{{product.name[0]}}</div>{% endif %}</div><div><label>{{product.category}}</label><h1>{{product.name}}</h1><div class="big-price">{{product.price_display}} <small>listed price</small></div><span class="unit">{{product.unit}}</span><p>{{product.description}}</p>{% if product.specifications %}<div class="spec"><b>Specifications</b><p>{{product.specifications}}</p></div>{% endif %}<p class="note">Final price and availability are subject to confirmation.</p><a class="btn orange big js-wa" data-name="{{product.name}}" data-price="{{product.price_display}}" data-unit="{{product.unit}}" href="#">{{'Order on WhatsApp ↗' if product.availability=='Available' else 'Ask about availability ↗'}}</a></div></div></section>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} | CRISVIOLA RESOURCES LTD{% endblock %}
+
+{% block content %}
+<section class="section detail">
+  <a class="back" href="{{ url_for('public.products') }}">← Back to products</a>
+
+  <div class="detail-grid">
+    <div class="detail-pic">
+      {% if product.image %}
+
+        {% if product.image.startswith('http://') or product.image.startswith('https://') %}
+          <img src="{{ product.image }}"
+               alt="{{ product.name }}"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='grid';">
+        {% else %}
+          <img src="{{ url_for('static', filename=product.image) }}"
+               alt="{{ product.name }}"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='grid';">
+        {% endif %}
+
+        <div class="placeholder" style="display:none">{{ product.name[0] }}</div>
+
+      {% else %}
+        <div class="placeholder">{{ product.name[0] }}</div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label>{{ product.category }}</label>
+
+      <h1>{{ product.name }}</h1>
+
+      <div class="big-price">
+        {{ product.price_display }}
+        <small>listed price</small>
+      </div>
+
+      <span class="unit">{{ product.unit }}</span>
+
+      <p>{{ product.description }}</p>
+
+      {% if product.specifications %}
+        <div class="spec">
+          <b>Specifications</b>
+          <p>{{ product.specifications }}</p>
+        </div>
+      {% endif %}
+
+      <p class="note">
+        Final price and availability are subject to confirmation.
+      </p>
+
+      <a class="btn orange big js-wa"
+         data-name="{{ product.name }}"
+         data-price="{{ product.price_display }}"
+         data-unit="{{ product.unit }}"
+         href="#">
+        {{ 'Order on WhatsApp ↗' if product.availability == 'Available' else 'Ask about availability ↗' }}
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

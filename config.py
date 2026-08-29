@@ -15,5 +15,8 @@ class Config:
     BUSINESS_EMAIL = os.getenv('BUSINESS_EMAIL', 'hello@example.com')
     BUSINESS_ADDRESS = os.getenv('BUSINESS_ADDRESS', 'Business address placeholder')
     HERO_VIDEO_URL = os.getenv('HERO_VIDEO_URL', 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4')
+    CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
+    CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
+    CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
     MAX_CONTENT_LENGTH = 8 * 1024 * 1024
     UPLOAD_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp'}

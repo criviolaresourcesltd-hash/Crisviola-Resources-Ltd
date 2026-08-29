@@ -1,16 +1,24 @@
 <article class="card reveal">
   <a class="pic" href="{{ url_for('public.detail', product_id=product.id) }}">
     {% if product.image %}
-      <img loading="lazy"
-           src="{{ url_for('static', filename=product.image) }}"
-           alt="{{ product.name }}"
-           onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('image-missing');this.nextElementSibling.style.display='grid';">
+      {% if product.image.startswith('http://') or product.image.startswith('https://') %}
+        <img loading="lazy"
+             src="{{ product.image }}"
+             alt="{{ product.name }}"
+             onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('image-missing');this.nextElementSibling.style.display='grid';">
+      {% else %}
+        <img loading="lazy"
+             src="{{ url_for('static', filename=product.image) }}"
+             alt="{{ product.name }}"
+             onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('image-missing');this.nextElementSibling.style.display='grid';">
+      {% endif %}
       <div class="placeholder" style="display:none">{{ product.name[0] }}</div>
     {% else %}
       <div class="placeholder">{{ product.name[0] }}</div>
     {% endif %}
     <span>{{ product.availability }}</span>
   </a>
+
   <div class="body">
     <small>{{ product.category }} · {{ product.unit }}</small>
     <h3>{{ product.name }}</h3>

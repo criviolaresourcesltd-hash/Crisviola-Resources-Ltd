@@ -9,7 +9,7 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-only-change-me')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', f"sqlite:///{BASE_DIR/'instance'/'catalogue.db'}")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    WHATSAPP_NUMBER = ''.join(ch for ch in os.getenv('WHATSAPP_NUMBER', '2348000000000') if ch.isdigit())
+    WHATSAPP_NUMBER = ''.join(ch for ch in os.getenv('WHATSAPP_NUMBER', '2348037248021') if ch.isdigit())
     ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')
     ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'change-this-immediately')
     BUSINESS_EMAIL = os.getenv('BUSINESS_EMAIL', 'hello@example.com')

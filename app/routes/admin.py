@@ -1,4 +1,3 @@
-from pathlib import Path
 from flask import (
     Blueprint,
     current_app,
@@ -9,12 +8,14 @@ from flask import (
     session,
     url_for,
 )
+
 from ..extensions import db
 from ..models import Product
 from ..utils import admin_required, safe_upload_name, slugify
-import uuid
+
 import cloudinary
 import cloudinary.uploader
+import uuid
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -56,9 +57,12 @@ def dashboard():
 def new():
     if request.method == "POST":
         p = Product()
+
         save(p)
+
         db.session.add(p)
         db.session.commit()
+
         flash("Product added.", "success")
         return redirect(url_for("admin.dashboard"))
 
@@ -76,7 +80,9 @@ def edit(product_id):
 
     if request.method == "POST":
         save(p)
+
         db.session.commit()
+
         flash("Product updated.", "success")
         return redirect(url_for("admin.dashboard"))
 
@@ -92,12 +98,14 @@ def edit(product_id):
 def delete(product_id):
     db.session.delete(Product.query.get_or_404(product_id))
     db.session.commit()
+
     flash("Product deleted.", "success")
     return redirect(url_for("admin.dashboard"))
 
 
 def configure_cloudinary():
-    """Configure Cloudinary using Render environment variables."""
+    """Configure Cloudinary using environment variables."""
+
     cloudinary.config(
         cloud_name=current_app.config.get("CLOUDINARY_CLOUD_NAME"),
         api_key=current_app.config.get("CLOUDINARY_API_KEY"),
@@ -108,6 +116,7 @@ def configure_cloudinary():
 
 def upload_to_cloudinary(file, product_name):
     """Upload a product image to Cloudinary and return its secure URL."""
+
     configure_cloudinary()
 
     result = cloudinary.uploader.upload(
@@ -122,16 +131,36 @@ def upload_to_cloudinary(file, product_name):
 
 def save(p):
     p.name = request.form.get("name", "").strip()
+
     p.slug = f"{slugify(p.name)}-{p.id or uuid.uuid4().hex[:6]}"
+
     p.price = float(request.form.get("price") or 0)
-    p.currency = request.form.get("currency", "$").strip() or "$"
+
+    p.currency = (
+        request.form.get("currency", "$").strip()
+        or "$"
+    )
+
     p.unit = request.form.get("unit", "").strip()
-    p.category = request.form.get("category", "Other Products").strip()
+
+    p.category = (
+        request.form.get("category", "Other Products").strip()
+    )
+
     p.description = request.form.get("description", "").strip()
-    p.specifications = request.form.get("specifications", "").strip()
-    p.availability = request.form.get("availability", "Available")
+
+    p.specifications = (
+        request.form.get("specifications", "").strip()
+    )
+
+    p.availability = request.form.get(
+        "availability",
+        "Available",
+    )
+
     p.featured = request.form.get("featured") == "on"
 
+    # Get uploaded image
     f = request.files.get("image")
 
     if f and f.filename:
@@ -139,14 +168,27 @@ def save(p):
 
         if name:
             try:
-                # New uploads go to Cloudinary.
-                image_url = upload_to_cloudinary(f, p.name)
+                # Upload new images to Cloudinary
+                image_url = upload_to_cloudinary(
+                    f,
+                    p.name,
+                )
+
+                # Store the Cloudinary URL in the database
                 p.image = image_url
-            except Exception as e:
-                current_app.logger.exception("Cloudinary upload failed")
+
+            except Exception:
+                current_app.logger.exception(
+                    "Cloudinary upload failed"
+                )
+
                 flash(
                     "Image upload failed. Please check the Cloudinary settings.",
                     "error",
                 )
+
         else:
-            flash("Use JPG, JPEG, PNG or WEBP.", "error")
+            flash(
+                "Use JPG, JPEG, PNG or WEBP.",
+                "error",
+            )

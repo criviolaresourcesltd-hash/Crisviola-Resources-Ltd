@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Wholesale | Crisviola Resources Ltd{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>Wholesale</h1>
+        <p>Bulk supply for retailers, restaurants, distributors and businesses.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="eyebrow">Wholesale Supply</span>
+            <h2>Buy in Larger Quantities</h2>
+            <p>
+                Crisviola Resources Ltd supplies quality Nigerian food products
+                to businesses and bulk buyers.
+            </p>
+        </div>
+
+        <div class="cards-grid">
+
+            <div class="info-card">
+                <h3>Retailers</h3>
+                <p>
+                    Stock your shop with our range of food products,
+                    spices, nuts, seeds and oils.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>Restaurants</h3>
+                <p>
+                    Source quality ingredients in quantities suitable
+                    for restaurants and food businesses.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>Distributors</h3>
+                <p>
+                    Contact us for larger orders and distribution
+                    opportunities.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="cta-box">
+            <h2>Request Wholesale Pricing</h2>
+
+            <p>
+                Tell us the products and quantities you require.
+                We will provide availability and wholesale pricing.
+            </p>
+
+            <a
+                href="https://wa.me/{{ whatsapp_number }}?text=Hello%20Crisviola%20Resources%20Ltd%2C%0AI%20am%20interested%20in%20wholesale%20products.%0APlease%20provide%20your%20wholesale%20prices%2C%20minimum%20order%20quantities%20and%20available%20products.%0AThank%20you."
+                target="_blank"
+                class="btn btn-primary">
+                Request Wholesale Quote
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -23,9 +23,28 @@
     <small>{{ product.category }} · {{ product.unit }}</small>
     <h3>{{ product.name }}</h3>
     <strong>{{ product.price_display }}</strong><em>listed price</em>
-    <div>
-      <a class="btn dark" href="{{ url_for('public.detail', product_id=product.id) }}">View details</a>
-      <a class="btn green js-wa" data-name="{{ product.name }}" data-price="{{ product.price_display }}" data-unit="{{ product.unit }}" href="#">Order ↗</a>
-    </div>
+   <div>
+  <a class="btn dark" href="{{ url_for('public.detail', product_id=product.id) }}">
+    View details
+  </a>
+
+  <a class="btn green js-wa"
+     data-name="{{ product.name }}"
+     data-price="{{ product.price_display }}"
+     data-unit="{{ product.unit }}"
+     href="#">
+    Single Order ↗
+  </a>
+
+  <a class="btn dark"
+     href="{{ url_for('public.wholesale') }}">
+    Wholesale
+  </a>
+
+  <a class="btn dark"
+     href="{{ url_for('public.export') }}">
+    Export
+  </a>
+</div>
   </div>
 </article>
